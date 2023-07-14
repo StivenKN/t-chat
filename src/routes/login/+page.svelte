@@ -9,31 +9,31 @@
 </script>
 
 <main class="flex">
-  <section class="h-screen w-8/12 relative before:bg-black/30 before:absolute before:inset-0">
-    <img class="object-cover aspect-video h-full" src="/login-bg.jpg" alt="" />
+  <section class="relative w-8/12 h-screen before:bg-black/30 before:absolute before:inset-0">
+    <img class="object-cover h-full aspect-video" src="/login-bg.jpg" alt="" />
   </section>
   <section class="flex justify-center items-center w-[100vw] dark:bg-dark dark:text-white">
     <section>
-      <section class="pb-10 flex flex-col gap-2">
-        <h2 class="capitalize font-bold text-4xl">Inicia sesión</h2>
-        <p class="font-medium text-base">Por favor, llena la información a continuación para acceder.</p>
+      <section class="flex flex-col gap-2 pb-10">
+        <h2 class="text-4xl font-bold capitalize">Iniciar sesión</h2>
+        <p class="text-base font-medium">Por favor, llena la información a continuación para acceder.</p>
       </section>
       <section>
         <form method="post" on:submit|preventDefault={handleSubmit} class="flex flex-col gap-3">
           <section class="flex flex-col gap-y-5">
-            <section class="user-input flex flex-col relative">
-              <span class="ml-3 absolute top-3 select-none pointer-events-none transition text-gray-500">Nombre de usuario</span>
-              <input bind:value={loginData.username} class="rounded-lg border border-gray-500 bg-transparent text-white w-full py-3 px-3 focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none transition-colors" type="text" autocomplete="off" required />
+            <section class="relative flex flex-col">
+              <input bind:value={loginData.username} class="w-full px-3 py-3 transition-colors bg-transparent border border-gray-500 rounded-lg username-input dark:text-white focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none" type="text" autocomplete="username" required />
+              <span class="absolute ml-3 text-gray-500 transition pointer-events-none select-none top-3">Nombre de usuario</span>
             </section>
-            <section class="user-input flex flex-col relative">
-              <span class="ml-3 absolute top-3 select-none pointer-events-none transition text-gray-500">Contraseña</span>
-              <input bind:value={loginData.password} class="rounded-lg border border-gray-500 bg-transparent text-white w-full py-3 px-3 focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none transition-colors" type="password" required />
+            <section class="relative flex flex-col user-input">
+              <input bind:value={loginData.password} class="w-full px-3 py-3 transition-colors bg-transparent border border-gray-500 rounded-lg username-input dark:text-white focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none" type="password" required />
+              <span class="absolute ml-3 text-gray-500 transition pointer-events-none select-none top-3">Contraseña</span>
             </section>
           </section>
           {#if sendButton !== 'Enviando...'}
-            <button class="bg-violet-500 text-white self-center w-4/12 mt-3 py-2 px-1 rounded-md flex justify-center">{sendButton}</button>
+            <button class="flex self-center justify-center w-4/12 px-1 py-2 mt-3 text-white rounded-md bg-violet-500">{sendButton}</button>
           {:else}
-            <button disabled class="bg-violet-500 text-white self-center w-4/12 mt-3 py-2 px-1 rounded-md flex justify-evenly items-center"><Loader />{sendButton}</button>
+            <button disabled class="flex items-center self-center w-4/12 px-1 py-2 mt-3 text-white rounded-md bg-violet-500 justify-evenly"><Loader />{sendButton}</button>
           {/if}
         </form>
       </section>
@@ -43,8 +43,8 @@
 
 <style lang="postcss">
   @media (prefers-color-scheme: dark) {
-    .user-input:focus-within > span,
-    .inputinput:valid > .user-input span {
+    .username-input:focus ~ span,
+    .username-input:valid ~ span {
       transform: translateY(-25px);
       background: #121212;
       color: white;
@@ -52,7 +52,8 @@
   }
 
   @media (prefers-color-scheme: light) {
-    .user-input:focus-within > span {
+    .username-input:focus ~ span,
+    .username-input:valid ~ span {
       transform: translateY(-25px);
       background: white;
       color: black;
