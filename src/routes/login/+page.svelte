@@ -1,11 +1,10 @@
 <script>
   import Loader from '$lib/components/Loader.svelte'
   let sendButton = 'Enviar'
-  let username = null
-  let password = null
+  let loginData = { username: null, password: null }
   const handleSubmit = () => {
     sendButton = 'Enviando...'
-    console.table({ username, password })
+    console.table(loginData)
   }
 </script>
 
@@ -24,11 +23,11 @@
           <section class="flex flex-col gap-y-5">
             <section class="user-input flex flex-col relative">
               <span class="ml-3 absolute top-3 select-none pointer-events-none transition text-gray-500">Nombre de usuario</span>
-              <input bind:value={username} class="rounded-lg border border-gray-500 bg-transparent text-white w-full py-3 px-3 focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none transition-colors" type="text" autocomplete="off" required />
+              <input bind:value={loginData.username} class="rounded-lg border border-gray-500 bg-transparent text-white w-full py-3 px-3 focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none transition-colors" type="text" autocomplete="off" required />
             </section>
             <section class="user-input flex flex-col relative">
               <span class="ml-3 absolute top-3 select-none pointer-events-none transition text-gray-500">Contraseña</span>
-              <input bind:value={password} class="rounded-lg border border-gray-500 bg-transparent text-white w-full py-3 px-3 focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none transition-colors" type="password" required />
+              <input bind:value={loginData.password} class="rounded-lg border border-gray-500 bg-transparent text-white w-full py-3 px-3 focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none transition-colors" type="password" required />
             </section>
           </section>
           {#if sendButton !== 'Enviando...'}
