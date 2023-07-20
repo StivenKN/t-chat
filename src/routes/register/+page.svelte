@@ -1,10 +1,14 @@
 <script>
+  import axios from 'axios'
   import Loader from '$lib/components/Loader.svelte'
+    import { goto } from '$app/navigation'
   let sendButton = 'Regístrarse'
-  let loginData = { username: null, password: null }
-  const handleSubmit = () => {
+  let loginData = { name: null, password: null }
+  const handleSubmit = async () => {
     sendButton = 'Registrando...'
-    console.table(loginData)
+    const postInfo = await axios.post('http://localhost:3000/api/v1/register', loginData)
+    console.log(postInfo.data.msg)
+    // goto('login')
   }
 </script>
 
@@ -14,7 +18,7 @@
     <form method="post" on:submit|preventDefault={handleSubmit} class="flex flex-col gap-5">
       <section class="flex flex-col gap-y-5">
         <section class="relative flex flex-col">
-          <input bind:value={loginData.username} class="w-10/12 px-3 py-3 mx-auto transition-colors bg-transparent border border-gray-500 rounded-lg sm:w-full username-input dark:text-white focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none" type="text" autocomplete="username" required />
+          <input bind:value={loginData.name} class="w-10/12 px-3 py-3 mx-auto transition-colors bg-transparent border border-gray-500 rounded-lg sm:w-full username-input dark:text-white focus:shadow-sm dark:focus:shadow-violet-500/80 focus:shadow-gray-500/80 focus:outline-none" type="text" autocomplete="username" required />
           <span class="absolute px-1 ml-12 text-gray-500 transition pointer-events-none select-none sm:ml-3 top-3">Nombre de usuario</span>
         </section>
       </section>
