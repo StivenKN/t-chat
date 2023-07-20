@@ -1,5 +1,8 @@
 import { app } from "./app.js"
 
+
 const PORT = 3000
 
-app.listen(PORT, () => console.log(`Server workin on port ${PORT}`))
+app.listen(PORT, () => {
+  console.log(`Server working on port ${PORT} and connected to mongodb`)
+})
