@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import Joi from 'joi'
 
 export const User = mongoose.model('User', {
+  _id: String,
   name: String,
   password: String
 })

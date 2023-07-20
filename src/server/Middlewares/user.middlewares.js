@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt'
-import { userSchema } from '../models/users.models.js'
+import { v5 as uuidv5 } from 'uuid'
+import { User, userSchema } from '../models/users.models.js'
+import { namespace } from '../config/config.js'
 
-export const authUser = async (req, res, next) => {
+export const validateRequest = async (req, res, next) => {
   const { name, password } = req.body
   try {
     await userSchema.validateAsync({ name, password })
@@ -20,5 +22,25 @@ export const cryptPassword = async (req, res, next) => {
     next()
   } catch (error) {
     res.status(400).json({ error: error.details[0].message })
+  }
+}
+
+export const checkExistingUsername = async (req, res, next) => {
+  User.findOne({ name: req.body.name })
+    .then((user) => {
+      if (user) throw new Error('Username already exists')
+      next()
+    })
+    .catch(() => {
+      res.status(400).json({ error: 'User already exists' })
+    })
+}
+
+export const createUuid = (req, res, next) => {
+  try {
+    req.body._id = uuidv5(req.body.name, namespace)
+    next()
+  } catch (error) {
+    res.status(500).json({ error: 'DB_ERROR' })
   }
 }
